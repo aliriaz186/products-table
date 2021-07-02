@@ -23,20 +23,20 @@
            {{-- <label onclick="switchFilters()" style="margin-left: 20px;padding:5px;background:#d3d3d385;border-radius:5px;cursor: pointer;" ><i class="fa fa-filter"></i> Filters</label> --}}
            <div style="padding: 10px;" id="filtersdiv">
                 {{-- <input type="text" placeholder="Search by Influencer" id="influencer" > --}}
-                <select id="influencer" style="margin-left:10px;padding:5px" onchange="getFilteredData()">
+                <select id="influencer" style="margin-left:10px;padding:5px;width:150px" onchange="getFilteredData()">
                     <option value="" >Search Influencer</option>
                     @foreach ($influencers as $item)
                     <option value="{{$item->influencer}}">{{$item->influencer}}</option>
                     @endforeach
                 </select>
-                <select  style="margin-left:10px;padding:5px" id="product" onchange="getFilteredData()">
+                <select  style="margin-left:10px;padding:5px;width:150px" id="product" onchange="getFilteredData()">
                     <option value="" >Search Product</option>
                     @foreach ($products as $item)
                     <option value="{{$item->product}}">{{$item->product}}</option>
                     @endforeach
                 </select>
                 {{-- <input type="text" placeholder="Search by Product Name" style="margin-left:10px" id="product" onkeydown="searchInfoOnKeyDown()"> --}}
-                <select style="margin-left:10px;padding:5px" id="category" onchange="getFilteredData()">
+                <select style="margin-left:10px;padding:5px;width:150px" id="category" onchange="getFilteredData()">
                     <option value="" >Select Category</option>
                     @foreach ($categories as $item)
                     <option value="{{$item->product_type}}">{{$item->product_type}}</option>
@@ -50,7 +50,7 @@
                 <input type="hidden" id="sort_type" value="0">
                 <input type="hidden" id="sort_ascending" value="0">
 
-                <span style="float: right">
+                <span>
                     <label>SHOW ROWS</label>
                     <select id="length" onchange="getFilteredData()">
                         <option value="15" selected>15</option>
@@ -59,7 +59,7 @@
                         <option  value="60">60</option>
                         <option  value="75">75</option>
                     </select>
-                    <span style="margin-left: 20px">
+                    <span style="margin-left: 5px">
                         Showing 1 - <span id="show-filtered">0</span> out of <span id="show-total">0</span> total
                     </span>
                 </span>

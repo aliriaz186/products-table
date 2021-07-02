@@ -114,12 +114,14 @@
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <section  style="padding-top: 200px;">
-{{--        <div class="banner__bg"></div>--}}
+
+<section  style="padding-top: 200px;">
+    <h5 style="padding: 20px;font-family: Times New Roman;color:#007bff">Discount + Promocode</h5>
+    {{--        <div class="banner__bg"></div>--}}
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h5>Discount + Promocode</h5>
+
                     {{-- <h2 style="text-align: center;background-image: linear-gradient(to right, #f495e1, #2979ff);
                     -webkit-background-clip: text;
                     -webkit-text-fill-color: transparent;margin-bottom:20px;font-family: cursive;">DISKODE ENTRIES</h2>
@@ -129,7 +131,7 @@
                        {{-- <label onclick="switchFilters()" style="margin-left: 20px;padding:5px;background:#d3d3d385;border-radius:5px;cursor: pointer;" ><i class="fa fa-filter"></i> Filters</label> --}}
                        <div style="padding: 10px;" id="filtersdiv">
                                 {{-- <input type="text" placeholder="Search by Influencer" id="influencer" > --}}
-                                <select id="influencer" style="margin-left:10px;padding:5px" onchange="getFilteredData()">
+                                <select id="influencer" style="margin-left:10px;padding:5px;width:160px" onchange="getFilteredData()">
                                     <option value="" >Search Influencer</option>
                                     @foreach ($influencers as $item)
                                     <option value="{{$item->influencer}}">{{$item->influencer}}</option>
@@ -578,6 +580,7 @@
                        continue;
                     }
                             let trinner = document.createElement('tr');
+                            trinner.style.background = 'lightgrey';
                             trinner.setAttribute('name', 'trinner' + entries[i].id);
                             trinner.style.display = 'none';
                             let td1inner = document.createElement('td');
@@ -756,7 +759,7 @@
                 processData: false,
                 success: function (result) {
                     if(result === true){
-                        swal("Success", "Liked");
+                        swal("Success", "UnLiked");
                     }else{
                         swal("Error", "You Already gave the feedbackfor this entry.");
                     }

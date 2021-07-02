@@ -82,7 +82,7 @@ class AuthController extends Controller
     }
 
     public function liked(Request $request){
-        if(!Liked::where('ip', $request->ip())->where('useragent', $request->useragent)->where('status','liked')->where('entry_id', $request->id)->exists()){
+        // if(!Liked::where('ip', $request->ip())->where('useragent', $request->useragent)->where('status','liked')->where('entry_id', $request->id)->exists()){
             $liked = new Liked();
             $liked->entry_id = $request->id;
             $liked->status = $request->status;
@@ -90,15 +90,15 @@ class AuthController extends Controller
             $liked->useragent = $request->useragent;
             $liked->save();
             return json_encode(true);
-        }else{
-            return json_encode(false);
-        }
+        // }else{
+        //     return json_encode(false);
+        // }
 
     }
 
 
     public function unliked(Request $request){
-        if(!Liked::where('ip', $request->ip())->where('useragent', $request->useragent)->where('entry_id', $request->id)->where('status','unliked')->exists()){
+        // if(!Liked::where('ip', $request->ip())->where('useragent', $request->useragent)->where('entry_id', $request->id)->where('status','unliked')->exists()){
             $liked = new Liked();
             $liked->entry_id = $request->id;
             $liked->ip = $request->ip();
@@ -106,9 +106,9 @@ class AuthController extends Controller
             $liked->status = $request->status;
             $liked->save();
             return json_encode(true);
-        }else{
-            return json_encode(false);
-        }
+        // }else{
+        //     return json_encode(false);
+        // }
 
     }
 
