@@ -86,8 +86,7 @@
             </div>
 
             <div class="form-group">
-                <button type="submit" id="btnFetch"
-                        style="background-image: linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);;letter-spacing: 4px;width: 136px;float: left;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;text-align: center;color: #fff;text-transform: uppercase;padding: 7px 0 7px;font-family: 'futura-normalregular';font-size: 15px;border: none;cursor: pointer;">
+                <button type="submit" id="btnFetch" class="btn btn-primary">
                     UPDATE
                 </button>
             </div>

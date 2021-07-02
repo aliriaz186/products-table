@@ -231,16 +231,16 @@
 
 <header class="header-area">
     <div class="header-nav" style="top: 0px">
-        <div class="container">
+        <div class="container" style="max-width: 1500px!important">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="navigation">
                         <nav class="navbar navbar-expand-lg navbar-light ">
                             <a class="navbar-brand" href="{{url('')}}"><img src="{{url('')}}/assets/images/logo.png"
-                                                                            style="width: 160px;height: 110px"></a>
+                                                                            ></a>
 
                             <a class="navbar-brand-2" href="{{url('')}}"><img src="{{url('')}}/assets/images/logo.png"
-                                                                              style="width: 160px;height: 110px"></a>
+                                                                              ></a>
                             <!-- logo -->
                             <button class="navbar-toggler" type="button" data-toggle="collapse"
                                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -256,14 +256,14 @@
                                         <a class="nav-link {{!\Request::is('/') ? 'blackcolorlink ' : ''}}{{\Request::is('/') ? 'activenavlink' : ''}}"
                                            href="{{url('')}}">HOME</a>
                                     </li>
-                                    <li class="nav-item">
+                                    {{-- <li class="nav-item">
                                         <a class="nav-link {{!\Request::is('/') ? 'blackcolorlink ' : ''}}{{\Request::is('reviews') ? 'activenavlink' : ''}}"
                                         href="{{url('reviews')}}">FEEDBACK </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link"
                                         href="https://patreon.com/user?u=57651221" target="_blank">SUPPORT US </a>
-                                    </li>
+                                    </li> --}}
 
                                     <li class="nav-item">
                                         <a class="nav-link {{!\Request::is('/') ? 'blackcolorlink ' : ''}}{{\Request::is('contact') ? 'activenavlink' : ''}}"
@@ -317,7 +317,7 @@
 <!--====== FOOTER PART START ======-->
 
 <footer class="footer-area" style="background-color: rgba(211,211,211,0.24);padding-top: 0px;margin-top: 300px;">
-    <div class="container">
+    <div class="container" style="max-width: 1500px">
         <div class="footer-items" style="margin-top: 0px;border-top: 0px">
             <div class="row">
                 <div class="col-lg-4 col-md-6">
@@ -330,14 +330,14 @@
                 <div class="col-lg-4 col-md-6">
                     <div style="margin: 0 auto;" class="ftlinksresp">
                         <a href="mailto:diskode.help@gmail.com">diskode.help@gmail.com</a><br>
-                        <a href="https://patreon.com/user?u=57651221" target="_blank">Support us</a><br>
+                        <a href="https://www.patreon.com/_Diskode" target="_blank">patreon.com/_Diskode</a><br>
                         {{-- <a href="{{url('user-agreement')}}">User Agreement</a><br>
                         <a href="{{url('privacy-policy')}}">Privacy Policy</a> --}}
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4">
-                    <div class="ftlinksresp2">
-                  <p style="padding: 1px">
+                    <div class="ftlinksresp2" style="margin-left: 50px">
+                  <p style="padding: 1px;">
                         </p>
 
                         <a target="_blank" href="#" class="fa fa-facebook facustom mgleft5"></a>

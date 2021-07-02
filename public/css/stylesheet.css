@@ -468,7 +468,7 @@ body {
     /* background: #6b9ce8; */
     /*background: -webkit-linear-gradient(to bottom, #FFB88C, #DE6262);*/
     /*background: linear-gradient(to bottom, #FFB88C, #DE6262);*/
-    background-image: linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);
+    background: #05728f;
 }
 
 .chiller-theme .sidebar-wrapper .sidebar-header,

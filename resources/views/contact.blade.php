@@ -8,15 +8,14 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-md-10">
-                    <h2 style="text-align: center;background-image: linear-gradient(to right, #f495e1, #2979ff);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;font-family: cursive;">CONTACT US</h2>
+                    <h2 style="text-align: center;">CONTACT US</h2>
 
                 </div>
             </div> <!-- row -->
             <p style="margin-top: 40px">
-                Please see our contact details below. Feel free to email our tech support directly using the form underneath. We aim to respond within 1 working day. If you are missing an email from us, please check your junk mail before contacting us.
-
+                Feel free to email our technical support with feedback and questions. We will try to respond within 24 hours. If you are missing an email from us please check your junk folder before emailing again.
+                <br>
+                If you would like your products to be featured on our Diskode website, please provide us with the influencers name/company name, product name, promocode, and a website or link to their social media or channel.
 <div class="trustedsite-trustmark" data-type="211" data-width="120"  data-height="50"></div>
             </p>
             <form method="post" action="{{url("/sendmessage")}}" onsubmit="return validateForm()">
@@ -35,8 +34,8 @@
                                         <h4 style="color: black">{{\Illuminate\Support\Facades\Session::get("msg")}}</h4>
                                     </div>
                                 @endif
-                                    <h6 class="title" style="font-size: 30px!important;margin-top: 10px">CONTACT <span>US</span>
-                                    </h6>
+                                    {{-- <h6 class="title" style="font-size: 30px!important;margin-top: 10px">CONTACT <span>US</span>
+                                    </h6> --}}
                             </div>
                             <div class="login-form">
                                 <div class="input-box">
@@ -54,7 +53,7 @@
 
 
                                 <div style="margin-top: 20px">
-                                    <button type="submit" class="main-btn" style="background-image: linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);">
+                                    <button type="submit" class="btn btn-primary" style>
                                         SUBMIT
                                     </button>
 
@@ -71,6 +70,9 @@
                                 </div>
                                 <div style="padding: 5px;">
                                     Instagram : _Diskode <br>
+                                </div>
+                                <div style="padding: 5px;">
+                                    Support : <a href="https://www.patreon.com/_Diskode" target="_blank">patreon.com/_Diskode</a> <br>
                                 </div>
                             </div>
 

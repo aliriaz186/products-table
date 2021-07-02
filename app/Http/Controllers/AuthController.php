@@ -82,7 +82,7 @@ class AuthController extends Controller
     }
 
     public function liked(Request $request){
-        if(!Liked::where('ip', $request->ip())->where('useragent', $request->useragent)->where('entry_id', $request->id)->exists()){
+        if(!Liked::where('ip', $request->ip())->where('useragent', $request->useragent)->where('status','liked')->where('entry_id', $request->id)->exists()){
             $liked = new Liked();
             $liked->entry_id = $request->id;
             $liked->status = $request->status;
@@ -98,7 +98,7 @@ class AuthController extends Controller
 
 
     public function unliked(Request $request){
-        if(!Liked::where('ip', $request->ip())->where('useragent', $request->useragent)->where('entry_id', $request->id)->exists()){
+        if(!Liked::where('ip', $request->ip())->where('useragent', $request->useragent)->where('entry_id', $request->id)->where('status','unliked')->exists()){
             $liked = new Liked();
             $liked->entry_id = $request->id;
             $liked->ip = $request->ip();
@@ -126,7 +126,8 @@ class AuthController extends Controller
         $sortProduct = $request->sort_product;
         $sortType = $request->sort_type;
 
-        $entries = Entry::where('id', '!=', 0);
+        $entries = Entry::select('id','influencer', 'product', 'product_type', 'promo_code', 'logo', 'worked', 'notwordked', 'info', 'created_at', 'updated_at')->where('id', '!=', 0)->groupBy('influencer');
+        $countEnteries = $entries->get()->count();
         $limit = $request->input('length');
        if(!empty($request->category)){
         $category = $request->category;
@@ -150,6 +151,10 @@ class AuthController extends Controller
        }
        else if($sortType == 1){
         $entries = $entries->orderBy('product_type', 'ASC')->limit($limit)->get();
+       }else if($request->sort_ascending == 0){
+        $entries = $entries->limit($limit)->get();
+       }else if($request->sort_ascending == 1){
+        $entries = $entries->orderBy('id', 'DESC')->limit($limit)->get();
        }else{
         $entries = $entries->limit($limit)->get();
        }
@@ -171,10 +176,18 @@ class AuthController extends Controller
                 $item->notwordked = round($unworkedC);
                 $item->update();
            }
+
         }
+            if(Entry::where('influencer', $item->influencer)->count() > 1){
+                $item->haveManyProducts = 1;
+                $item->products = Entry::where('influencer', $item->influencer)->get();
+            }else{
+                $item->haveManyProducts = 0;
+            }
 
        }
-        return json_encode(['status' => true, 'data' => $entries]);
+       $entriesCount = $countEnteries;
+        return json_encode(['status' => true, 'data' => $entries, 'entriesCount' => $entriesCount]);
     }
 
 

@@ -4,7 +4,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     {{--    <div>--}}
-    <div class="container" style="max-width: 1200px;margin-top: 30px;margin-bottom: 50px">
+    <div class="container" style="max-width: 1500px;margin-top: 30px;margin-bottom: 10px">
         @if($errors->any())
             <div class="alert alert-danger">
                 <h4 style="color: black;font-size: 14px">{{$errors->first()}}</h4>
@@ -18,14 +18,7 @@
         <h3 style="letter-spacing: 3px;margin-top: 20px" class="mt-4 mb-3">ENTRIES</h3>
         <p style="font-size: 13px;">Below is a list of all the entries.</p>
         <div class="px-5">
-            <label>SHOW ROWS</label>
-           <select id="length" onchange="getFilteredData()">
-               <option value="15" selected>15</option>
-               <option  value="30">30</option>
-               <option  value="45">45</option>
-               <option  value="60">60</option>
-               <option  value="75">75</option>
-           </select>
+
 
            {{-- <label onclick="switchFilters()" style="margin-left: 20px;padding:5px;background:#d3d3d385;border-radius:5px;cursor: pointer;" ><i class="fa fa-filter"></i> Filters</label> --}}
            <div style="padding: 10px;" id="filtersdiv">
@@ -49,13 +42,31 @@
                     <option value="{{$item->product_type}}">{{$item->product_type}}</option>
                     @endforeach
                 </select>
+                <button class="btn btn-outline-dark" onclick="sortDesc()" id="decending" style="padding-top: 2px;padding-bottom:2px">Sort Decending <i class="fas fa-chevron-down"></i></button>
+                <button class="btn btn-outline-dark" onclick="sortAsc()" id="ascending" style="display:none;padding-top: 2px;padding-bottom:2px">Sort Ascending <i class="fas fa-chevron-up"></i></button>
+
                 <input type="hidden" id="sort_influencer" value="0">
                 <input type="hidden" id="sort_product" value="0">
                 <input type="hidden" id="sort_type" value="0">
+                <input type="hidden" id="sort_ascending" value="0">
+
+                <span style="float: right">
+                    <label>SHOW ROWS</label>
+                    <select id="length" onchange="getFilteredData()">
+                        <option value="15" selected>15</option>
+                        <option  value="30">30</option>
+                        <option  value="45">45</option>
+                        <option  value="60">60</option>
+                        <option  value="75">75</option>
+                    </select>
+                    <span style="margin-left: 20px">
+                        Showing 1 - <span id="show-filtered">0</span> out of <span id="show-total">0</span> total
+                    </span>
+                </span>
            </div>
         </div>
 
-        <div class="px-1 table-responsive">
+        <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -126,6 +137,10 @@
                 </tbody>
             </table>
         </div>
+
+    </div>
+    <div style="float: right">
+        Showing 1 - <span id="show-filtered2">0</span> out of <span id="show-total2">0</span> total
     </div>
     <div class="modal" id="myModal">
         <div class="modal-dialog">
@@ -165,6 +180,22 @@
         </div>
     </div>
     <script>
+        function sortAsc(){
+            resetSort();
+            document.getElementById('ascending').style.display = 'none';
+            document.getElementById('decending').style.display = 'inline';
+            document.getElementById('sort_ascending').value = 0;
+            getFilteredData();
+        }
+
+        function sortDesc(){
+            resetSort();
+            document.getElementById('ascending').style.display = 'inline';
+            document.getElementById('decending').style.display = 'none';
+            document.getElementById('sort_ascending').value = 1;
+            getFilteredData();
+        }
+
         function setName(fileId, inputId) {
             var files = document.getElementById(fileId).files;
             if (files.length > 0) {
@@ -318,6 +349,7 @@
         let sort_influencer = document.getElementById('sort_influencer').value;
         let sort_product = document.getElementById('sort_product').value;
         let sort_type = document.getElementById('sort_type').value;
+        let sort_ascending = document.getElementById('sort_ascending').value;
 
         let formData = new FormData();
         formData.append('influencer', influencer);
@@ -327,6 +359,7 @@
         formData.append('sort_influencer', sort_influencer);
         formData.append('sort_product', sort_product);
         formData.append('sort_type', sort_type);
+        formData.append('sort_ascending', sort_ascending);
         formData.append("_token", "{{ csrf_token() }}");
         document.getElementById('tbodyId').innerHTML = 'Filtering data...';
         $.ajax({
@@ -341,7 +374,11 @@
 
                 if (result.status === true) {
                    console.log(result.data);
-                   showData(result.data)
+                   showData(result.data);
+                   document.getElementById('show-filtered').innerText = result.data.length;
+                   document.getElementById('show-total').innerText = result.entriesCount;
+                   document.getElementById('show-filtered2').innerText = result.data.length;
+                       document.getElementById('show-total2').innerText = result.entriesCount;
 
                 } else {
                     Swal.fire({

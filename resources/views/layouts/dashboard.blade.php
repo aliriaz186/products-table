@@ -107,6 +107,12 @@ $user =  \App\User::where('id',\Illuminate\Support\Facades\Session::get('userId'
                                 <span>ADD NEW ENTRY</span>
                             </a>
                         </li>
+                        <li class="{{\Request::is('profile') ? 'bgactivelink' : ''}}" style="border: 1px solid white;border-bottom: 0px">
+                            <a class="{{\Request::is('profile') ? 'coloractivelink' : ''}}" href="{{url('profile')}}" >
+{{--                                <i class="fas fa-users"></i>--}}
+                                <span>PROFILE</span>
+                            </a>
+                        </li>
                         <li class="" style="border: 1px solid white;">
                             <a href="{{ route('logout-user') }}">
 {{--                                <i class="fas fa-user"></i>--}}

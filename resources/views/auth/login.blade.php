@@ -16,9 +16,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="login-title">
-                            <h2 style="text-align: center;    background-image: linear-gradient(to right, #f495e1, #2979ff);
-                            -webkit-background-clip: text;
-                            -webkit-text-fill-color: transparent;font-family: cursive;">ADMIN LOGIN</h2>
+                            <h2 style="text-align: center; ">ADMIN LOGIN</h2>
 
                             @if($errors->any())
                                 <div class="alert alert-danger" style="margin-top: 10px">
@@ -50,8 +48,7 @@
             <div class="container" >
                 <div class="row">
                     <div class="col-lg-3 mt-30">
-                        <button type="submit"
-                                style="background-image: linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);;letter-spacing: 3px;border: none;color: #fff;cursor: pointer;padding: 1.0rem 3rem;text-transform: uppercase;width: 100%;border-radius: 5px;line-height: 18px;font-size: 15px !important;">
+                        <button type="submit" class="btn btn-primary">
                             Login
                         </button>
 

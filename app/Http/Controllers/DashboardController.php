@@ -16,11 +16,15 @@ class DashboardController extends Controller
     {
         $userId = Session::get('userId');
         $user = User::where('id', $userId)->first();
-        $entries = Entry::all()->count();
-        $codeViews = CodeView::all()->count();
-        $likes = Liked::where('status', 'liked')->count();
-        $dislikes = Liked::where('status', 'unliked')->count();
-        return view('dashboard.home')->with(['user' => $user, 'entries' => $entries, 'codeViews' => $codeViews, 'likes' => $likes, 'dislikes' => $dislikes]);
+        $entries = Entry::all();
+        $tempEntries = [];
+        foreach($entries as $item){
+            $item->views = CodeView::where('entry_id', $item->id)->distinct('useragent', 'ip')->count();
+            if((int)$item->views > 0){
+                array_push($tempEntries, $item);
+            }
+        }
+        return view('dashboard.home')->with(['user' => $user, 'tempEntries' => $tempEntries]);
     }
 
     public function showUploadNewEntryPage()
@@ -142,6 +146,37 @@ class DashboardController extends Controller
         return view('dashboard.edit-entry')->with(['entry' => $entry]);
     }
 
+    public function profile(){
+        return view('dashboard.profile');
+    }
+
+    public function saveProfileInfo(Request $request){
+        try {
+            if(User::where('password', $request->oldpassword)->exists()){
+                if(empty($request->newpassword)){
+                    return redirect()->back()->withErrors(["New Password is required"]);
+                }
+                if(empty($request->confirmnewpassword)){
+                    return redirect()->back()->withErrors(["Confirm New Password is required"]);
+                }
+                if($request->newpassword != $request->confirmnewpassword){
+                    return redirect()->back()->withErrors(["Password Mismatch"]);
+                }
+                $admin = User::where('email', 'admin')->first();
+                $admin->password = $request->newpassword;
+                $admin->update();
+                session()->flash('msg', 'Password Changes Successfully.');
+                return redirect()->back();
+            }else{
+                return redirect()->back()->withErrors(["Old Password not matched"]);
+            }
+
+        }catch (\Exception $exception){
+            return redirect()->back()->withErrors([$exception->getMessage()]);
+
+        }
+    }
+
     public function searchEntries(Request $request){
 
         $sortInfluencer = $request->sort_influencer;
@@ -172,6 +207,10 @@ class DashboardController extends Controller
        }
        else if($sortType == 1){
         $entries = $entries->orderBy('product_type', 'ASC')->limit($limit)->get();
+       }else if($request->sort_ascending == 0){
+        $entries = $entries->limit($limit)->get();
+       }else if($request->sort_ascending == 1){
+        $entries = $entries->orderBy('id', 'DESC')->limit($limit)->get();
        }else{
         $entries = $entries->limit($limit)->get();
        }
@@ -198,6 +237,7 @@ class DashboardController extends Controller
         $item->views = CodeView::where('entry_id', $item->id)->distinct('useragent', 'ip')->count();
 
        }
-        return json_encode(['status' => true, 'data' => $entries]);
+       $entriesCount = Entry::all()->count();
+       return json_encode(['status' => true, 'data' => $entries, 'entriesCount' => $entriesCount]);
     }
 }
