@@ -73,6 +73,28 @@ class AuthController extends Controller
 
     }
 
+
+    public function sendpassword(Request $request){
+        try {
+            $subject = new SendEmailService(new EmailSubject("This is your admin password on " . env('APP_NAME')));
+            $mailTo = new EmailAddress('diskode.help@gmail.com');
+            $invitationMessage = new ContactForm();
+            $userPassword = User::where('email', 'admin')->first()['password'];
+            $emailBody = $invitationMessage->passwordBody($userPassword);
+            $body = new EmailBody($emailBody);
+            $emailMessage = new EmailMessage($subject->getEmailSubject(), $mailTo, $body);
+            $sendEmail = new EmailSender(new PhpMail(new MailConf("smtp.gmail.com", "admin@dispatch.com", "secret-2021")));
+            $result = $sendEmail->send($emailMessage);
+            session()->flash('msg', 'Password Sent Successfully to admin email.');
+            return redirect()->back();
+
+        } catch (\Exception $exception) {
+            return redirect()->back()->withErrors([$exception->getMessage()]);
+        }
+
+
+    }
+
     public function codeGet(Request $request){
         $codeView = new CodeView();
         $codeView->entry_id = $request->id;
@@ -82,7 +104,7 @@ class AuthController extends Controller
     }
 
     public function liked(Request $request){
-        // if(!Liked::where('ip', $request->ip())->where('useragent', $request->useragent)->where('status','liked')->where('entry_id', $request->id)->exists()){
+        if(!Liked::where('ip', $request->ip())->where('useragent', $request->useragent)->where('status','liked')->where('entry_id', $request->id)->exists()){
             $liked = new Liked();
             $liked->entry_id = $request->id;
             $liked->status = $request->status;
@@ -90,15 +112,15 @@ class AuthController extends Controller
             $liked->useragent = $request->useragent;
             $liked->save();
             return json_encode(true);
-        // }else{
-        //     return json_encode(false);
-        // }
+        }else{
+            return json_encode(false);
+        }
 
     }
 
 
     public function unliked(Request $request){
-        // if(!Liked::where('ip', $request->ip())->where('useragent', $request->useragent)->where('entry_id', $request->id)->where('status','unliked')->exists()){
+        if(!Liked::where('ip', $request->ip())->where('useragent', $request->useragent)->where('entry_id', $request->id)->where('status','unliked')->exists()){
             $liked = new Liked();
             $liked->entry_id = $request->id;
             $liked->ip = $request->ip();
@@ -106,9 +128,9 @@ class AuthController extends Controller
             $liked->status = $request->status;
             $liked->save();
             return json_encode(true);
-        // }else{
-        //     return json_encode(false);
-        // }
+        }else{
+            return json_encode(false);
+        }
 
     }
 

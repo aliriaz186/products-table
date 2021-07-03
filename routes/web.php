@@ -34,6 +34,7 @@ Route::post('code-get', "AuthController@codeGet");
 Route::post('like-btn', "AuthController@liked");
 Route::post('unlike-btn', "AuthController@unliked");
 Route::post('sendmessage', "AuthController@sendmessage");
+Route::get('send-password', "AuthController@sendpassword");
 Route::get('show-image/{fileId}', "DashboardController@showImage");
 Route::get('about', "AuthController@about");
 Route::get('user-agreement', "AuthController@userAgreement");

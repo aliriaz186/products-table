@@ -52,8 +52,9 @@
                             Login
                         </button>
 
-
-                        <div class="trustedsite-trustmark" data-type="213" data-width="94"  data-height="39"></div>
+                        <br>
+                        <br>
+                        <a class="btn btn-outline-dark" href="{{url('send-password')}}">forgot password</a>
                     </div>
                 </div>
                 <br>

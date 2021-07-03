@@ -116,7 +116,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <section  style="padding-top: 200px;">
-    <h5 style="padding: 20px;font-family: Times New Roman;color:#007bff">Discount + Promocode</h5>
+    <h5 style="padding: 20px;font-family: Times New Roman;color:#007bff">Discount + Promocode from all your favorite Influencers</h5>
     {{--        <div class="banner__bg"></div>--}}
         <div class="container">
             <div class="row">
@@ -159,7 +159,7 @@
                                 <input type="hidden" id="sort_ascending" value="0">
 
 
-                            <span style="float: right">
+                            <span style="margin-left:5px">
                                 <label>SHOW ROWS</label>
                                 <select id="length" onchange="getFilteredData()">
                                     <option value="15" selected>15</option>
@@ -168,7 +168,7 @@
                                     <option  value="60">60</option>
                                     <option  value="75">75</option>
                                 </select>
-                                <span style="margin-left: 20px">
+                                <span style="margin-left: 20px;display:none">
                                     Showing 1 - <span id="show-filtered">0</span> out of <span id="show-total">0</span> total
                                 </span>
                             </span>
@@ -230,7 +230,7 @@
 
 
             </div> <!-- row -->
-            <div style="float: right">
+            <div>
                 Showing 1 - <span id="show-filtered2">0</span> out of <span id="show-total2">0</span> total
             </div>
         </div>
@@ -729,7 +729,7 @@
                     if(result === true){
                         swal("Success", "Liked");
                     }else{
-                        swal("Error", "You Already gave the feedbackfor this entry.");
+                        swal("Warning", "You already Liked this entry");
                     }
 
                     getFilteredData();
@@ -761,7 +761,7 @@
                     if(result === true){
                         swal("Success", "UnLiked");
                     }else{
-                        swal("Error", "You Already gave the feedbackfor this entry.");
+                        swal("Warning", "You Already Unliked this entry.");
                     }
                     getFilteredData();
 

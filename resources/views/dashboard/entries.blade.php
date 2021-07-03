@@ -50,7 +50,7 @@
                 <input type="hidden" id="sort_type" value="0">
                 <input type="hidden" id="sort_ascending" value="0">
 
-                <span>
+                <span style="margin-left: 5px">
                     <label>SHOW ROWS</label>
                     <select id="length" onchange="getFilteredData()">
                         <option value="15" selected>15</option>
@@ -59,7 +59,7 @@
                         <option  value="60">60</option>
                         <option  value="75">75</option>
                     </select>
-                    <span style="margin-left: 5px">
+                    <span style=";display:none">
                         Showing 1 - <span id="show-filtered">0</span> out of <span id="show-total">0</span> total
                     </span>
                 </span>
@@ -137,11 +137,12 @@
                 </tbody>
             </table>
         </div>
+        <div>
+            Showing 1 - <span id="show-filtered2">0</span> out of <span id="show-total2">0</span> total
+        </div>
 
     </div>
-    <div style="float: right">
-        Showing 1 - <span id="show-filtered2">0</span> out of <span id="show-total2">0</span> total
-    </div>
+
     <div class="modal" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
