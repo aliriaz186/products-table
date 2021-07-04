@@ -7,6 +7,7 @@ use App\Entry;
 use App\Liked;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 
 
@@ -19,7 +20,7 @@ class DashboardController extends Controller
         $entries = Entry::all();
         $tempEntries = [];
         foreach($entries as $item){
-            $item->views = CodeView::where('entry_id', $item->id)->distinct('useragent', 'ip')->count();
+            $item->views = CodeView::where('entry_id', $item->id)->count();
             if((int)$item->views > 0){
                 array_push($tempEntries, $item);
             }
@@ -49,7 +50,7 @@ class DashboardController extends Controller
         $type = mime_content_type($file);
         header('Content-Type:' . $type);
         header('Content-Length: ' . filesize($file));
-        header('Content-Disposition: attachment; filename="Logo.png"');
+        // header('Content-Disposition: attachment; filename="Logo.png"');
         return readfile($file);
     }
 
@@ -93,7 +94,7 @@ class DashboardController extends Controller
             if ($request->hasfile('fileOne')) {
                 $files = $request->file('fileOne');
                 foreach ($files as $file) {
-                    $name = $request->fileOneName . rand(0, 1000) .time() . '.' . $file->getClientOriginalExtension();
+                    $name = rand(0, 1000) .time() . '.' . $file->getClientOriginalExtension();
                     $file->move(base_path('/data') . '/files/', $name);
                     $entry->logo = $name;
                 }
@@ -123,9 +124,12 @@ class DashboardController extends Controller
             $entry->info = $request->info;
 
             if ($request->hasfile('fileOne')) {
+                if(File::exists(base_path('/data') . '/files/' . $entry->logo)){
+                    File::delete(base_path('/data') . '/files/' . $entry->logo);
+                }
                 $files = $request->file('fileOne');
                 foreach ($files as $file) {
-                    $name = $request->fileOneName . rand(0, 1000) .time() . '.' . $file->getClientOriginalExtension();
+                    $name = rand(0, 1000) .time() . '.' . $file->getClientOriginalExtension();
                     $file->move(base_path('/data') . '/files/', $name);
                     $entry->logo = $name;
                 }
@@ -234,7 +238,7 @@ class DashboardController extends Controller
            }
         }
 
-        $item->views = CodeView::where('entry_id', $item->id)->distinct('useragent', 'ip')->count();
+        $item->views = CodeView::where('entry_id', $item->id)->count();
 
        }
        $entriesCount = Entry::all()->count();
