@@ -166,19 +166,19 @@ class AuthController extends Controller
 
        //sorting
        if($sortInfluencer == 1){
-         $entries = $entries->orderBy('influencer', 'ASC')->limit($limit)->get();
+         $entries = $entries->orderBy('influencer', 'ASC')->offset($request->start)->limit($limit)->get();
        }
        else if($sortProduct == 1){
-        $entries = $entries->orderBy('product', 'ASC')->limit($limit)->get();
+        $entries = $entries->orderBy('product', 'ASC')->offset($request->start)->limit($limit)->get();
        }
        else if($sortType == 1){
-        $entries = $entries->orderBy('product_type', 'ASC')->limit($limit)->get();
+        $entries = $entries->orderBy('product_type', 'ASC')->offset($request->start)->limit($limit)->get();
        }else if($request->sort_ascending == 0){
-        $entries = $entries->limit($limit)->get();
+        $entries = $entries->offset($request->start)->limit($limit)->get();
        }else if($request->sort_ascending == 1){
-        $entries = $entries->orderBy('id', 'DESC')->limit($limit)->get();
+        $entries = $entries->orderBy('id', 'DESC')->offset($request->start)->limit($limit)->get();
        }else{
-        $entries = $entries->limit($limit)->get();
+        $entries = $entries->offset($request->start)->limit($limit)->get();
        }
 
        foreach($entries as $item){

@@ -162,6 +162,7 @@
                             <span style="margin-left:5px">
                                 <label>SHOW ROWS</label>
                                 <select id="length" onchange="getFilteredData()">
+
                                     <option value="15" selected>15</option>
                                     <option  value="30">30</option>
                                     <option  value="45">45</option>
@@ -231,7 +232,11 @@
 
             </div> <!-- row -->
             <div>
-                Showing 1 - <span id="show-filtered2">0</span> out of <span id="show-total2">0</span> total
+                Showing <span id="show-filtered2">0 - 0</span> out of <span id="show-total2">0</span> total
+            </div>
+            <div style="float: right">
+                <button id="previousbtn" class="btn btn-primary" onclick="getFilteredData(1)">Previous</button>
+                <button id="nextbtn" class="btn btn-primary" onclick="getFilteredData(2)">Next</button>
             </div>
         </div>
 
@@ -267,6 +272,7 @@
             $('#influencer').select2();
             $('#product').select2();
             $('#category').select2();
+            document.getElementById('previousbtn').setAttribute('disabled', true);
 
 
         });
@@ -385,8 +391,10 @@
         }
 
         let openIds = [];
+        let start = 0;
+        let end = 5;
 
-        function getFilteredData(){
+        function getFilteredData(statt = null){
             let influencer = document.getElementById('influencer').value;
             let product = document.getElementById('product').value;
             let category = document.getElementById('category').value;
@@ -395,6 +403,26 @@
             let sort_product = document.getElementById('sort_product').value;
             let sort_type = document.getElementById('sort_type').value;
             let sort_ascending = document.getElementById('sort_ascending').value;
+
+            if(statt === 2){
+                start = start + parseInt(length);
+                end = start +  parseInt(length);
+            }
+            if(statt === 1){
+                start = start - parseInt(length);
+                end = end -  parseInt(length);
+            }
+
+            if(statt === null){
+                start = 0;
+                end = parseInt(length);
+            }
+            if(start === 0){
+                document.getElementById('previousbtn').setAttribute('disabled', true);
+            }else{
+                document.getElementById('previousbtn').removeAttribute('disabled', true);
+            }
+
 
             let formData = new FormData();
             formData.append('influencer', influencer);
@@ -405,6 +433,7 @@
             formData.append('sort_product', sort_product);
             formData.append('sort_type', sort_type);
             formData.append('sort_ascending', sort_ascending);
+            formData.append('start', start);
             formData.append("_token", "{{ csrf_token() }}");
             document.getElementById('tbodyId').innerHTML = 'Filtering data...';
             $.ajax({
@@ -423,8 +452,17 @@
                        showData(result.data);
                        document.getElementById('show-filtered').innerText = result.data.length;
                        document.getElementById('show-total').innerText = result.entriesCount;
-                       document.getElementById('show-filtered2').innerText = result.data.length;
+                        if(result.entriesCount < end){
+                            end = result.entriesCount;
+                        }
+                       document.getElementById('show-filtered2').innerText = (start+1) + ' - ' +end;
                        document.getElementById('show-total2').innerText = result.entriesCount;
+
+                       if(end >= result.entriesCount){
+                            document.getElementById('nextbtn').setAttribute('disabled', true);
+                        }else{
+                            document.getElementById('nextbtn').removeAttribute('disabled', true);
+                        }
 
                     } else {
                         Swal.fire({
@@ -447,8 +485,9 @@
 
         function showData(entries){
             document.getElementById('tbodyId').innerHTML = '';
+            let indexing = start;
             for(let i=0;i<entries.length;i++){
-
+                indexing++;
                 let tr = document.createElement('tr');
                 let td1 = document.createElement('td');
                 let td2 = document.createElement('td');
@@ -459,7 +498,7 @@
                 let td7 = document.createElement('td');
                 let td8 = document.createElement('td');
                 let tdoptions = document.createElement('td');
-                td1.innerText = i + 1;
+                td1.innerText = indexing;
                 let img = document.createElement('img');
                 img.src = `{{url('show-image')}}` + '/' + entries[i].id;
                 img.style = "height: 30px;width: 30px;border-radius: 12px;";
@@ -592,7 +631,7 @@
                             let td7inner = document.createElement('td');
                             let td8inner = document.createElement('td');
                             let tdoptionsinner = document.createElement('td');
-                            td1inner.innerText = (i+1) + alphabet[alphaCount];
+                            td1inner.innerText = indexing + alphabet[alphaCount];
                             alphaCount++;
 
 
